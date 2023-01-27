@@ -1,1 +1,5 @@
-Production grade Nextjs setup, comes with husky, prettier and linting configured. 
+## Production grade Nextjs setup. 
+
+Comes preconfigured with prettier, eslint and husky to trigger pre-commit / pre-push lint and build. 
+
+
