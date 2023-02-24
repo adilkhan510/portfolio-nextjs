@@ -60,11 +60,7 @@ export default function HomeLayout({
         <Link href="/">
           <span className="sr-only">Logo</span>
         </Link>
-        <a
-          href="https://github.com/steven-tey/dub"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="" target="_blank" rel="noreferrer">
           <span className="sr-only">Github</span>
         </a>
       </div>
