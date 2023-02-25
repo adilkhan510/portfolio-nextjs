@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Meta from '../meta';
-
+import logo from '../../../public/logo.svg';
 const setingss = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
@@ -34,11 +34,11 @@ export default function HomeLayout({
             <div className="flex items-center">
               <Link href="/">
                 <Image
-                  src="/_static/logotype.svg"
+                  src={logo}
                   alt="adil.sh logo"
                   width={834}
                   height={236}
-                  className="w-24"
+                  className="w-16"
                 />
               </Link>
             </div>
