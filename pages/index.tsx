@@ -1,12 +1,12 @@
 import WithContainer from '../components/WithContainer/';
+import HackerScreen from '../components/animations/HackerScreen';
 import HomeLayout from '../components/layout/home';
 
 export default function Home() {
   return (
     <HomeLayout>
-      <WithContainer className="bg-black text-green-900">
-        <div className="text-white text-7xl">hello</div>
-        <div className=" text-7xl">hello</div>
+      <WithContainer>
+        <HackerScreen />
       </WithContainer>
     </HomeLayout>
   );

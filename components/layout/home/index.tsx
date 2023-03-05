@@ -29,7 +29,7 @@ export default function HomeLayout({
     <div className="flex min-h-screen flex-col justify-between">
       <Meta {...meta} />
       <div className={`${key ? 'bg-gray-50' : ''} z-20`}>
-        <div className="mx-auto max-w-screen-xl px-5 md:px-20">
+        <div className="mx-auto  px-5 md:px-20">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <Link href="/">
@@ -41,13 +41,6 @@ export default function HomeLayout({
                   className="w-16"
                 />
               </Link>
-            </div>
-            <div>
-              <nav>
-                <ul>
-                  <li>item one</li>
-                </ul>
-              </nav>
             </div>
           </div>
         </div>
