@@ -52,10 +52,10 @@ const generateBio = async (): Promise<string> => {
   try {
     const response = await fetch('/api/about');
     const data = await response.json();
-    return data.bio;
+    return data;
   } catch (error) {
     console.error(error);
-    return 'Error generating bio';
+    return `Error generating bio, ${error}`;
   }
 };
 
@@ -68,6 +68,7 @@ const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
     useState<string>('~/users/adil');
   const [command, setCommand] = useState<string>('');
   const [output, setOutput] = useState<JSX.Element[]>([]);
+  const [bio, setBio] = useState<string>('');
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [commandIndex, setCommandIndex] = useState<number>(-1);
 
@@ -78,7 +79,6 @@ const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
   useEffect(() => {
     generateBio().then((bio) => {
       setOutput((prevOutput) => [
-        ...prevOutput,
         <div key={prevOutput.length} className="text-white font-pixelated">
           {bio}
         </div>,
@@ -116,7 +116,6 @@ const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
         }
         break;
       case 'cat bio.txt':
-        const bio = await generateBio;
         setOutput((prevOutput) => [
           ...prevOutput,
           <div key={prevOutput.length} className="text-white font-pixelated">
