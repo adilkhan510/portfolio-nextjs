@@ -49,16 +49,16 @@ const createOutput = (pwd: string): JSX.Element => {
 //   return <div>{req.data.created.toLocaleString()}</div>;
 // };
 
-const generateBio = async (): Promise<string> => {
-  // try {
-  //   const response = await fetch('/api/about');
-  //   const data = await response.json();
-  //   return data;
-  // } catch (error) {
-  //   console.error(error);
-  //   return `Error generating bio, ${error}`;
-  // }
-};
+// const generateBio = async (): Promise<string> => {
+//   // try {
+//   //   const response = await fetch('/api/about');
+//   //   const data = await response.json();
+//   //   return data;
+//   // } catch (error) {
+//   //   console.error(error);
+//   //   return `Error generating bio, ${error}`;
+//   // }
+// };
 
 const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
   name,
