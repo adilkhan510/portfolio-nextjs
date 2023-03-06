@@ -8,7 +8,10 @@ const WithContainer: FC<ComponentPropsWithoutRef<'div'>> = ({
   return (
     <div
       {...props}
-      className={classNames('container mx-auto px-7 min-h-screen', className)}
+      className={classNames(
+        'container max-w-screen-xl mx-auto px-7 min-h-screen',
+        className
+      )}
     />
   );
 };

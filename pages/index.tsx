@@ -1,12 +1,12 @@
 import WithContainer from '../components/WithContainer/';
-import HackerScreen from '../components/animations/HackerScreen';
 import HomeLayout from '../components/layout/home';
+import Home from '../components/pages/Home';
 
-export default function Home() {
+export default function Index() {
   return (
     <HomeLayout>
       <WithContainer>
-        <HackerScreen />
+        <Home />
       </WithContainer>
     </HomeLayout>
   );

@@ -1,10 +1,17 @@
+import classNames from 'classnames';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
-const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-export default function HackerScreen() {
+const letters = '1010101010';
+export interface HackerScreenProps {
+  className?: string;
+  title?: string;
+  text?: string;
+  href?: string;
+}
+export default function HackerScreen(props: HackerScreenProps) {
   const [hovered, setHovered] = useState(false);
-  const [title, setTitle] = useState('ADIL KHAN');
+  const [title, setTitle] = useState(props.title || 'adil.sh');
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
@@ -25,7 +32,7 @@ export default function HackerScreen() {
               return title.charAt(index);
             }
 
-            return letters[Math.floor(Math.random() * 26)];
+            return letters[Math.floor(Math.random() * 10)];
           })
           .join('')
       );
@@ -35,23 +42,35 @@ export default function HackerScreen() {
       }
 
       iteration += 1 / 3;
-    }, 30);
+    }, 15);
 
     setIntervalId(id as any);
   };
 
   return (
-    <div className="h-screen">
+    <div className="">
       <h1
-        className={`${
-          hovered ? ' text-blue-300' : 'text-blue-500'
-        } font-mono text-3xl sm:text-7xl lg:text-10xl rounded-md px-0 sm:px-1 md:px-2 lg:px-3 cursor-pointer transition-colors duration-600 text-sans`}
+        className={classNames(
+          props.className,
+          `${
+            hovered ? ' text-blue-300' : 'text-blue-500'
+          } font-mono text-3xl sm:text-7xl lg:text-10xl rounded-md px-0 sm:px-1 md:px-2 lg:px-3 cursor-pointer transition-colors duration-600 text-sans`
+        )}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onMouseOver={handleTitleHover}
         data-value={title}
       >
-        {title}
+        <Link
+          href={
+            props.href
+              ? props.href
+              : 'https://www.linkedin.com/in/adilmuneerkhan/'
+          }
+          passHref
+        >
+          {title}
+        </Link>
       </h1>
     </div>
   );
