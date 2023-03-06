@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import HackerScreen from '../animations/HackerScreen';
+import About from '../about/About';
 
 export interface HomeProps {}
 
@@ -11,7 +12,9 @@ const Home: FC<HomeProps> = () => {
         <HackerScreen className="bg-black text-blue-400" title="LINKEDIN" />
         <HackerScreen className="bg-black text-white" title="GITHUB" />
       </div>
-      <div>hello</div>
+      <div className="flex flex-col justify-center items-center h-auto">
+        <About name="Adil" age={4} occupation={'codeeeee'} />
+      </div>
     </div>
   );
 };
