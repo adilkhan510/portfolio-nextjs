@@ -1,7 +1,8 @@
-import { FC, useState, ChangeEvent, FormEvent } from 'react';
+import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { TerminalIcon } from '@heroicons/react/solid';
 import { FolderIcon } from '@heroicons/react/solid';
-import { FolderOpenIcon } from '@heroicons/react/solid';
+import { OpenAIApi } from 'openai';
+import Image from 'next/image';
 
 interface PersonInfoTerminalProps {
   name: string;
@@ -16,6 +17,46 @@ const createOutput = (pwd: string): JSX.Element => {
       <p className="text-white">{pwd}</p>
     </div>
   );
+};
+
+// const generateBio = async (): Promise<any> => {
+//   const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY || '';
+//   const prompt = `Generate bio of a full stack developer named John who works with React, Next.js, and TypeScript.`;
+//   const openaiInstance = new OpenAIApi({
+//     apiKey,
+//     isJsonMime(mime) {
+//       return mime === 'application/json';
+//     },
+//   });
+//   const req = await openaiInstance.createImage({
+//     prompt: 'make some art',
+//     size: '1024x1024',
+//   });
+//   const res = await openaiInstance.createChatCompletion({
+//     model: 'gpt-3.5-turbo',
+//     frequency_penalty: 0.0,
+//     presence_penalty: 0.0,
+//     max_tokens: 100,
+//     messages: [
+//       {
+//         content: prompt,
+//         role: 'user',
+//       },
+//     ],
+//   });
+//   //   return response.choices[0].text.trim();
+//   return <div>{req.data.created.toLocaleString()}</div>;
+// };
+
+const generateBio = async (): Promise<string> => {
+  try {
+    const response = await fetch('/api/about');
+    const data = await response.json();
+    return data.bio;
+  } catch (error) {
+    console.error(error);
+    return 'Error generating bio';
+  }
 };
 
 const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
@@ -34,7 +75,18 @@ const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
     setCommand(e.target.value);
   };
 
-  const handleCommandSubmit = (e: FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    generateBio().then((bio) => {
+      setOutput((prevOutput) => [
+        ...prevOutput,
+        <div key={prevOutput.length} className="text-white font-pixelated">
+          {bio}
+        </div>,
+      ]);
+    });
+  }, [command]);
+
+  const handleCommandSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setOutput((prevOutput) => [
@@ -64,12 +116,11 @@ const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
         }
         break;
       case 'cat bio.txt':
+        const bio = await generateBio;
         setOutput((prevOutput) => [
           ...prevOutput,
-          <div key={prevOutput.length} className="text-white">
-            Hi, my name is {name}, and I am a {occupation} who works with React,
-            Next.js, and TypeScript. I have over {age} years of experience in
-            web development.
+          <div key={prevOutput.length} className="text-white font-pixelated">
+            {bio as any}
           </div>,
         ]);
         break;
@@ -80,16 +131,16 @@ const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
       default:
         setOutput((prevOutput) => [
           ...prevOutput,
-          <div key={prevOutput.length} className="text-red-500">
+          <div key={prevOutput.length} className="text-red-500 font-pixelated">
             {`bash: ${command}: command not found`}
           </div>,
         ]);
         break;
     }
 
-    setCommandHistory((prevHistory) => [...prevHistory, command]);
-    setCommand('');
+    setCommandHistory((prevHistory) => [command, ...prevHistory]);
     setCommandIndex(-1);
+    setCommand('');
   };
 
   const handleCommandKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -116,7 +167,7 @@ const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
   return (
     <div className="bg-black rounded-lg px-4 py-2 w-full max-w-4xl">
       <div className="flex items-center justify-between">
-        <p className="text-green-500">{currentDirectory}</p>
+        <p className="text-green-500 font-pixelated">{currentDirectory}</p>
         <TerminalIcon className="h-6 w-6 text-green-500" />
       </div>
       <div className="bg-black font-pixelated px-2 py-1 mt-2 h-64 overflow-y-auto">
@@ -127,7 +178,7 @@ const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
           {currentDirectory} $
         </span>
         <input
-          className="bg-transparent focus:outline-none text-green-500 w-auto"
+          className="bg-transparent focus:outline-none text-green-500 font-pixelated"
           type="text"
           value={command}
           onChange={handleCommandChange}
