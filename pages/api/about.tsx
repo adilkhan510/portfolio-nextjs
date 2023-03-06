@@ -28,5 +28,5 @@ export default async function handler(
   });
   console.log('RESPONSE....', response.status);
   res.setHeader('Content-Type', 'application/json');
-  res.status(200).json({ name: 'John Doe' });
+  res.status(200).send({ response });
 }

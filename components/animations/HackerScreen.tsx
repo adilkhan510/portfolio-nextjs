@@ -42,7 +42,7 @@ export default function HackerScreen(props: HackerScreenProps) {
       }
 
       iteration += 1 / 3;
-    }, 15);
+    }, 30);
 
     setIntervalId(id as any);
   };
@@ -54,7 +54,7 @@ export default function HackerScreen(props: HackerScreenProps) {
           props.className,
           `${
             hovered ? ' text-blue-300' : 'text-blue-500'
-          } font-mono text-3xl sm:text-7xl lg:text-10xl rounded-md px-0 sm:px-1 md:px-2 lg:px-3 cursor-pointer transition-colors duration-600 text-sans`
+          } font-serifs font-extralight text-3xl md:text-6xl lg:text-10xl rounded-md px-0 sm:px-1 md:px-2 lg:px-3 cursor-pointer transition-colors duration-600 text-sans`
         )}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}

@@ -8,6 +8,7 @@ interface PersonInfoTerminalProps {
   name: string;
   age: number;
   occupation: string;
+  data?: any;
 }
 
 const createOutput = (pwd: string): JSX.Element => {
@@ -49,14 +50,14 @@ const createOutput = (pwd: string): JSX.Element => {
 // };
 
 const generateBio = async (): Promise<string> => {
-  try {
-    const response = await fetch('/api/about');
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return `Error generating bio, ${error}`;
-  }
+  // try {
+  //   const response = await fetch('/api/about');
+  //   const data = await response.json();
+  //   return data;
+  // } catch (error) {
+  //   console.error(error);
+  //   return `Error generating bio, ${error}`;
+  // }
 };
 
 const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
@@ -77,13 +78,13 @@ const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
   };
 
   useEffect(() => {
-    generateBio().then((bio) => {
-      setOutput((prevOutput) => [
-        <div key={prevOutput.length} className="text-white font-pixelated">
-          {bio}
-        </div>,
-      ]);
-    });
+    // generateBio().then((bio) => {
+    //   setOutput((prevOutput) => [
+    //     <div key={prevOutput.length} className="text-white font-pixelated">
+    //       {bio}
+    //     </div>,
+    //   ]);
+    // });
   }, [command]);
 
   const handleCommandSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -190,3 +191,31 @@ const PersonInfoTerminal: FC<PersonInfoTerminalProps> = ({
 };
 
 export default PersonInfoTerminal;
+
+export async function getServerSideProps() {
+  const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY || '';
+  const prompt =
+    'Generate bio of a full stack developer named John who works with React, Next.js, and TypeScript.';
+  const openaiInstance = new OpenAIApi({
+    apiKey,
+    isJsonMime(mime) {
+      return mime === 'application/json';
+    },
+  });
+  const res = await openaiInstance.createChatCompletion({
+    model: 'davinci',
+    frequency_penalty: 0.0,
+    presence_penalty: 0.0,
+    max_tokens: 100,
+    messages: [
+      {
+        content: prompt,
+        role: 'user',
+      },
+    ],
+  });
+  const data = await res.data.created.toLocaleString();
+
+  // Pass data to the page via props
+  return { props: { data } };
+}
