@@ -8,7 +8,6 @@ import logo from '../../../public/logo.svg';
 export default function HomeLayout({
   meta,
   children,
-  className,
 }: {
   meta?: {
     title?: string;
