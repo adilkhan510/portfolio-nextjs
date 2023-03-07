@@ -8,6 +8,7 @@ import logo from '../../../public/logo.svg';
 export default function HomeLayout({
   meta,
   children,
+  className,
 }: {
   meta?: {
     title?: string;
@@ -19,7 +20,7 @@ export default function HomeLayout({
   const router = useRouter();
   const { key } = router.query as { key?: string };
   return (
-    <div className="flex min-h-screen flex-col justify-between bg-green-300">
+    <div className="absolute top-0 left-0 w-screen h-screen overflow-hidden flex min-h-screen flex-col justify-between bg-green-300">
       <Meta {...meta} />
       <div>
         <div className="mx-auto max-w-screen-xl px-5 md:px-20">
